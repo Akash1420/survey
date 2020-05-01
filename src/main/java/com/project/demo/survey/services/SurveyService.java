@@ -2,6 +2,8 @@ package com.project.demo.survey.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.demo.survey.entities.Choice;
@@ -20,10 +22,25 @@ public class SurveyService {
 	@Autowired
 	SurveyRepository surveyRepository;
 	
+	@Autowired
+	ChoiceRepository choiceRepository;
+	
+	public List<Choice> findAllChoices() {
+		List<Choice> choices =  choiceRepository.findAll();
+		System.out.println(choices);
+		return choices;
+		}
+	
+	@Transactional
+	public void updateChoice(Choice updatedChoice) {
+	Choice choice = choiceRepository.findById(updatedChoice.getId());
+	choice.setCount(updatedChoice.getCount());
+	choice.setChoice_text(updatedChoice.getChoice_text());
+	}
 	
 	
-//	@Autowired
-//	OptionsRepository optionsRepository;
+	
+
 
 	public Question addQuestions(Question question) {
 		return questionRepository.save(question);
@@ -35,27 +52,13 @@ public class SurveyService {
 		System.out.println(questions);
 		return questions;
 	}
-	
-//	public List<Choice> findAllChoices() {
-//		List<Choice> choices =  choiceRepository.findAll();
-//		System.out.println(choices);
-//		return choices;
-//	}
-//	
+		
 	
 	public Survey addSurvey(Survey quiz) {
 		return surveyRepository.save(quiz);
 		
 	}
 	
-//	@Transactional
-//	public void updateChoice(Choice updatedChoice) {
-//
-//		Choice choice = choiceRepository.findById(updatedChoice.getId());
-//		choice.setCount(updatedChoice.getCount());
-//		
-//	}
-
 
 	public List<Survey> findAllSurveys() {
 		List<Survey> surveys =  surveyRepository.findAll();
@@ -67,3 +70,27 @@ public class SurveyService {
 		return surveyRepository.findByName(name);
 	}
 }
+
+
+
+
+
+/*
+
+@Autowired
+ChoiceRepository choiceRepository;
+
+public List<Choice> findAllChoices() {
+List<Choice> choices =  choiceRepository.findAll();
+System.out.println(choices);
+return choices;
+}
+
+@Transactional
+public void updateChoice(Choice updatedChoice) {
+
+Choice choice = choiceRepository.findById(updatedChoice.getId());
+choice.setCount(updatedChoice.getCount());
+choice.setChoice_text(updatedChoice.getChoice_text());
+}
+*/

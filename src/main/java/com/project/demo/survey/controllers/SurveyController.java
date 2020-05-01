@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,6 +59,20 @@ public class SurveyController {
 		return re;
 
 	}
+	
+	@PutMapping("/choice")
+	public ResponseEntity<Void> updateChoice(@RequestBody Choice choice){
+
+	surveyService.updateChoice(choice);
+	ResponseEntity<Void> re = new ResponseEntity<>(HttpStatus.ACCEPTED);
+	return re;
+	}
+
+	@GetMapping("/choice")
+	public List<Choice> findAllChoices(){
+	return surveyService.findAllChoices();
+	}
+
 	
 	@GetMapping("/survey")
 	public List<Survey> findAllSurveys(){
